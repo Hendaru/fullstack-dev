@@ -1,0 +1,370 @@
+{
+	"info": {
+		"_postman_id": "e7d7db72-9137-483e-ad97-9f9075c0db27",
+		"name": "v1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3841305"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "create_user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"\",\n    \"email\":\"\",\n    \"password\":\"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/user",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"token\", pm.response.json().data.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \n    \"email\":\"h@h.co\",\n    \"password\":\"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"saka\",\n    \"email\":\"h@h.co\"\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/user/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"h@h.co\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/email_check",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"email_check"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update avater",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxfQ.N1c2nJo8nCgnpvmf1dYSNq_0tqzl9gs_SBG_aDhVCkE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/Users/hendaru/Downloads/394873_3776810393454_474371649_n.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/avatar-user",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"avatar-user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "GetProductByUserId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/product",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Product Hendaru hhhh",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "hore Saka",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "stock",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "product_image",
+									"type": "file",
+									"src": "/Users/hendaru/Downloads/Hotpot.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/product",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "hore 3",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "hore lg",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "20",
+									"type": "text"
+								},
+								{
+									"key": "stock",
+									"value": "40",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/product/product-2Nwnh6UuAxDkuiVODVC5KyrooxB",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"product",
+								"product-2Nwnh6UuAxDkuiVODVC5KyrooxB"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update product image",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "product_image",
+									"type": "file",
+									"src": "/Users/hendaru/Downloads/10504940_10201597705339117_3769024991944891727_o.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/product-image/product-2Nwnh6UuAxDkuiVODVC5KyrooxB",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"product-image",
+								"product-2Nwnh6UuAxDkuiVODVC5KyrooxB"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,66 @@
+version: '1'
+name: ${COMPOSE_PROJECT_NAME}
+services:
+  bwa-mysql:
+      image: mysql:5.7
+
+      container_name: bwa-database
+     
+      command: --default-authentication-plugin=mysql_native_password
+      restart: always
+      ports: 
+        - "3306:3306"
+      environment:
+        - MYSQL_ROOT_HOST=bwa-mysql
+        - MYSQL_USER=${DB_USER}
+        - MYSQL_PASSWORD=${DB_PASSWORD}
+        - MYSQL_DATABASE=${DB_NAME}
+        - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      
+      volumes: 
+         - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+  bwa-backend:
+      build: .
+      container_name: bwa-backend
+      image: backend:v1
+      ports:
+          - 8080:8080
+      restart: always
+      
+      # environment:
+      #   MYSQL_ROOT_PASSWORD: "root"
+      #   MYSQL_USER: "root"
+      #   MYSQL_DATABASE: "bwstartup"
+      #   MYSQL_HOST: "bwa-mysql"
+      #   MYSQL_PORT: "3305"
+      depends_on:
+          - bwa-mysql
+      volumes:
+          - ./:/go/src/github.com/Hendaru/bwaStartup
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_container
+    depends_on:
+      -  bwa-backend
+
+    environment:
+      - PMA_HOST=bwa-mysql # Note the "fullstack-mysql". Must be the name of the what you used as the mysql service.
+      - PMA_USER=${DB_USER}
+      - PMA_PORT=${DB_PORT}
+      - PMA_PASSWORD=${DB_PASSWORD}
+   
+    ports:
+      - 9090:80
+
+    restart: always
+
+networks:
+  default:
+volumes:
+  mysql_data:
+     
+      
+  
+    
+ 
